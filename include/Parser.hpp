@@ -1,10 +1,9 @@
-#include <fstream>
+#include <string>
 
 class Parser {
   public:
-    Parser(const std::string& filename);
     ~Parser();
-    void Parse();
+    void Parse(const std::string& filename);
   private:
     std::string filename_;
 };
