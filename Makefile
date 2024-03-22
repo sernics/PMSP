@@ -9,8 +9,8 @@ INCDIR = include
 BINDIR = bin
 
 # Archivos
-SOURCES := $(wildcard $(SRCDIR)/*.cc)
-OBJECTS := $(patsubst $(SRCDIR)/%.cc,$(BINDIR)/%.o,$(SOURCES))
+SOURCES := $(wildcard $(SRCDIR)/*.cpp)
+OBJECTS := $(patsubst $(SRCDIR)/%.cpp,$(BINDIR)/%.o,$(SOURCES))
 EXECUTABLE = $(BINDIR)/programa
 
 # Reglas de compilación
