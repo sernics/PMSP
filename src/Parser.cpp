@@ -30,7 +30,7 @@ void Parser::Parse(const std::string& filename) {
   ss3 >> word;
   int* processing_times = new int[jobs];
   int i = 0;
-  while (ss3 >> word) {  
+  while (ss3 >> word) {
     processing_times[i] = std::stoi(word);
     i++;
   }
@@ -38,14 +38,20 @@ void Parser::Parse(const std::string& filename) {
   for (int i = 0; i < jobs; i++) {
     std::cout << processing_times[i] << " ";
   }
-  std::cout << std::endl;
+  std::cout << std::endl; 
   int** matrix = new int*[jobs + 1];
   for (int i = 0; i < jobs + 1; i++) {
     matrix[i] = new int[jobs + 1];
   }
   std::getline(file, line);
-  std::getline(file, line);
-  std::cout << line << std::endl;
+  for (int i = 0; i < jobs + 1; i++) {
+    std::getline(file, line);
+    std::stringstream ss(line);
+    for (int j = 0; j < jobs + 1; j++) {
+      ss >> word;
+      matrix[i][j] = std::stoi(word);
+    }
+  }
   // Print matrix
   for (int i = 0; i < jobs + 1; i++) {
     for (int j = 0; j < jobs + 1; j++) {
