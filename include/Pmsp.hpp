@@ -2,10 +2,5 @@
 
 class Pmsp {
   public:
-    Pmsp() = default;
-    Pmsp(PmspProblem problem);
-    ~Pmsp();
-    PmspProblem getProblem() const { return problem_; }
-  private:
-    PmspProblem problem_;
+    virtual void Solve() = 0;
 };
