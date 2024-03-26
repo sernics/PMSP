@@ -1,9 +1,9 @@
 #include <string>
 
-#include "Pmsp.hpp"
+#include "PmspProblem.hpp"
 
 class Parser {
   public:
     ~Parser();
-    Pmsp Parse(const std::string& filename);
+    PmspProblem Parse(const std::string& filename);
 };

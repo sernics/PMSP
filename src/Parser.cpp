@@ -5,7 +5,7 @@
 
 Parser::~Parser() {}
 
-Pmsp Parser::Parse(const std::string& filename) {
+PmspProblem Parser::Parse(const std::string& filename) {
   std::ifstream file(filename);
   if (!file.is_open()) {
     std::cerr << "Error: could not open file " << filename << std::endl;
@@ -45,7 +45,7 @@ Pmsp Parser::Parse(const std::string& filename) {
       matrix[i][j] = std::stoi(word);
     }
   }
-  return Pmsp(jobs, machines, processing_times, matrix);
+  return PmspProblem(jobs, machines, processing_times, matrix);
 }
 
 
