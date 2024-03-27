@@ -1,3 +1,6 @@
+#ifndef PMSP_PROBLEM_HPP
+#define PMSP_PROBLEM_HPP
+
 class PmspProblem {
   public:
     PmspProblem() = default;
@@ -14,3 +17,5 @@ class PmspProblem {
     int* processing_times_;
     int** matrix_;
 };
+
+#endif // PMSP_PROBLEM_HPP

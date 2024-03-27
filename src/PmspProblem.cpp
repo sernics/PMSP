@@ -9,11 +9,6 @@ PmspProblem::PmspProblem(int jobs, int machines, int* processing_times, int** ma
 }
 
 PmspProblem::~PmspProblem() {
-  delete[] processing_times_;
-  for (int i = 0; i < jobs_ + 1; i++) {
-    delete[] matrix_[i];
-  }
-  delete[] matrix_;
 }
 
 void PmspProblem::PrintMatrix() {
