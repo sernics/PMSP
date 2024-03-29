@@ -1,5 +1,6 @@
 #include "../include/GreedyPmsp.hpp"
 #include <iostream>
+#include <algorithm>
 
 GreedyPmsp::GreedyPmsp(PmspProblem pmsp_problem) {
   pmsp_problem_ = pmsp_problem;
@@ -15,13 +16,15 @@ void GreedyPmsp::Solve() {
   for (int i = 0; i < pmsp_problem_.getMachines(); i++) {
     std::cout << initialJobs[i] << " ";
   }
-  std::cout << std::endl;
 }
 
 int* GreedyPmsp::getInitialJobs() {
   int* result = new int[pmsp_problem_.getMachines()];
+  int* processingTimes = this->pmsp_problem_.getProcessingTimes();
+  // Sort processingTimes
+  std::sort(processingTimes, processingTimes + pmsp_problem_.getJobs());
   for (int i = 0; i < pmsp_problem_.getMachines(); i++) {
-    result[i] = 10;
+    result[i] = processingTimes[i];
   }
-  return new int();
+  return result;
 }
