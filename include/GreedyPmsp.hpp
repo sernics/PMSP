@@ -3,6 +3,7 @@
 
 #include "Pmsp.hpp"
 #include "PmspProblem.hpp"
+#include <vector>
 
 class GreedyPmsp : public Pmsp {
   public:
@@ -10,6 +11,7 @@ class GreedyPmsp : public Pmsp {
     ~GreedyPmsp();
     void Solve() override;
     int* getInitialJobs();
+    std::vector<std::pair<int, int>> selectMinimalTime(int* processing_times);
   private:
     PmspProblem pmsp_problem_;
 };

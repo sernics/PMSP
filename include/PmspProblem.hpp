@@ -9,7 +9,7 @@ class PmspProblem {
     int getJobs() const { return jobs_; }
     int getMachines() const { return machines_; }
     int* getProcessingTimes() const { return processing_times_; }
-    int** getMatrix() const { return matrix_; }
+    int** getSetup() const { return matrix_; }
     void PrintMatrix();
   private:
     int jobs_;
