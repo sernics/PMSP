@@ -3,10 +3,14 @@
 #include "../include/GreedyPmsp.hpp"
 
 int main(int argc, char** argv) {
-  std::string filename = argv[1];
+  std::string filename;
+  if (argc == 2) {
+    filename = argv[1];
+  }
   Parser parser;
   PmspProblem pmspProblem = parser.Parse(filename);
   // pmspProblem.PrintMatrix();
   Pmsp* pmsp = new GreedyPmsp(pmspProblem);
-  pmsp->Solve();
+  PmspSolution solution = pmsp->Solve();
+  solution.PrintSolution();
 }

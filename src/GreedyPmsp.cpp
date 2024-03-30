@@ -1,5 +1,4 @@
 #include "../include/GreedyPmsp.hpp"
-#include <iostream>
 #include <vector>
 
 GreedyPmsp::GreedyPmsp(PmspProblem pmsp_problem) {
@@ -9,17 +8,27 @@ GreedyPmsp::GreedyPmsp(PmspProblem pmsp_problem) {
 GreedyPmsp::~GreedyPmsp() {
 }
 
-void GreedyPmsp::Solve() {
+PmspSolution GreedyPmsp::Solve() {
   int* initial = getInitialJobs(); 
   std::vector<std::pair<int, int>> minimal_time = selectMinimalTime(initial);
   std::vector<int> checkedPositions;
+  // second is the index of the job
   for (int i = 0; i < this->pmsp_problem_.getMachines(); i++) {
     checkedPositions.push_back(minimal_time[i].second);
   }
-  for (size_t i = 0; i < checkedPositions.size(); i++) {
-    std::cout << checkedPositions[i] << " ";
+  // Sort the checked positions
+  std::sort(checkedPositions.begin(), checkedPositions.end());
+  PmspSolution solution(this->pmsp_problem_);
+  solution.pushInitialSolution(checkedPositions);
+  int** setup = this->pmsp_problem_.getSetup();
+  while (int(checkedPositions.size()) < this->pmsp_problem_.getJobs()) {
+    for (int i = 0; i < this->pmsp_problem_.getMachines(); i++) {
+      std::tuple<int, int> nextOptimal = this->selectOptimusTime(setup[solution.getLastElement(i)], checkedPositions);
+      solution.pushIndex(i, std::get<1>(nextOptimal));
+      checkedPositions.push_back(std::get<1>(nextOptimal));
+    }
   }
-  std::cout << std::endl;
+  return solution;
 }
 
 int* GreedyPmsp::getInitialJobs() {
@@ -52,3 +61,16 @@ std::vector<std::pair<int, int>> GreedyPmsp::selectMinimalTime(int* processing_t
   return processing_times_vector;
 }
 
+std::pair<int, int> GreedyPmsp::selectOptimusTime(int* selectRow, std::vector<int>& checkedPositions) {
+  // Seleccionar el valor mínimo de la fila y guardar una tupla con el valor y la posición
+  std::pair<int, int> minimal_time = std::make_pair(selectRow[0], 0);
+  for (int i = 1; i < this->pmsp_problem_.getJobs() + 1; i++) {
+    if (selectRow[i] < minimal_time.first) {
+      // Asegurate de que el indice no esté en checkedPositions
+      if (std::find(checkedPositions.begin(), checkedPositions.end(), i) == checkedPositions.end()) {
+        minimal_time = std::make_pair(selectRow[i], i);
+      }
+    }
+  }
+  return minimal_time;
+}
