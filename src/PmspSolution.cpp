@@ -33,3 +33,21 @@ void PmspSolution::PrintSolution() {
     std::cout << std::endl;
   }
 }
+
+std::vector<int> PmspSolution::calculateTCT() {
+  std::vector<int> tct;
+  tct.resize(pmsp_problem_.getMachines());
+  for (int i = 0; i < pmsp_problem_.getMachines(); i++) {
+    tct[i] = 0;
+    tct[i] += pmsp_problem_.getProcessingTimes()[solution_[i][0]];
+    for (size_t j = 1; j < solution_[i].size(); j++) {
+      tct[i] += pmsp_problem_.getProcessingTimes()[solution_[i][j]];
+    }
+  }
+  return tct;
+}
+
+int PmspSolution::maxTCT() {
+  std::vector<int> tct = calculateTCT();
+  return *std::max_element(tct.begin(), tct.end());
+}

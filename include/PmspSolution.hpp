@@ -16,6 +16,8 @@ class PmspSolution {
     }
     int getLastElement(int i);
     void PrintSolution();
+    std::vector<int> calculateTCT();
+    int maxTCT();
   private:
     std::vector<std::vector<int>> solution_;
     PmspProblem pmsp_problem_;

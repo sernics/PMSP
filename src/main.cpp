@@ -2,6 +2,8 @@
 #include "../include/Pmsp.hpp"
 #include "../include/GreedyPmsp.hpp"
 
+#include <iostream>
+
 int main(int argc, char** argv) {
   std::string filename;
   if (argc == 2) {
@@ -13,4 +15,6 @@ int main(int argc, char** argv) {
   Pmsp* pmsp = new GreedyPmsp(pmspProblem);
   PmspSolution solution = pmsp->Solve();
   solution.PrintSolution();
+  solution.calculateTCT();
+  std::cout << "Total time of TCT: " << solution.maxTCT() << std::endl;
 }
