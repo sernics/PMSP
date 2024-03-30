@@ -26,7 +26,8 @@ int PmspSolution::getLastElement(int i) {
 
 void PmspSolution::PrintSolution() {
   for (int i = 0; i < pmsp_problem_.getMachines(); i++) {
-    for (int j = 0; j < pmsp_problem_.getJobs(); j++) {
+    std::cout << "Machine " << i << ": ";
+    for (size_t j = 0; j < solution_[i].size(); j++) {
       std::cout << solution_[i][j] << " ";
     }
     std::cout << std::endl;

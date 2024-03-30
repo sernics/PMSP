@@ -1,5 +1,6 @@
 #include "../include/GreedyPmsp.hpp"
 #include <vector>
+#include <iostream>
 
 GreedyPmsp::GreedyPmsp(PmspProblem pmsp_problem) {
   pmsp_problem_ = pmsp_problem;
@@ -16,24 +17,25 @@ PmspSolution GreedyPmsp::Solve() {
   for (int i = 0; i < this->pmsp_problem_.getMachines(); i++) {
     checkedPositions.push_back(minimal_time[i].second);
   }
-  // Sort the checked positions
-  std::sort(checkedPositions.begin(), checkedPositions.end());
   PmspSolution solution(this->pmsp_problem_);
   solution.pushInitialSolution(checkedPositions);
   int** setup = this->pmsp_problem_.getSetup();
+  std::cout << std::endl;
   while (int(checkedPositions.size()) < this->pmsp_problem_.getJobs()) {
     for (int i = 0; i < this->pmsp_problem_.getMachines(); i++) {
-      std::tuple<int, int> nextOptimal = this->selectOptimusTime(setup[solution.getLastElement(i)], checkedPositions);
-      solution.pushIndex(i, std::get<1>(nextOptimal));
-      checkedPositions.push_back(std::get<1>(nextOptimal));
+      if (int(checkedPositions.size()) == this->pmsp_problem_.getJobs()) {
+        break;
+      }
+      int* selectRow = setup[checkedPositions[i]];
+      std::pair<int, int> optimus_time = selectOptimusTime(selectRow, checkedPositions);
+      checkedPositions.push_back(optimus_time.second);
+      solution.pushIndex(i, optimus_time.second);
     }
   }
   return solution;
 }
 
 int* GreedyPmsp::getInitialJobs() {
-  // Guardar en un array el valor de this->pmsp_problem_.getProcessingTimes que es un array
-  // pero introducir un 0 en la primera posición
   int* processing_times = new int[this->pmsp_problem_.getJobs() + 1];
   processing_times[0] = 0;
   for (int i = 1; i <= this->pmsp_problem_.getJobs(); i++) {
@@ -47,12 +49,11 @@ int* GreedyPmsp::getInitialJobs() {
 }
 
 std::vector<std::pair<int, int>> GreedyPmsp::selectMinimalTime(int* processing_times) {
-  // Guardar en un vector los tiempos de procesamiento con su índice
   std::vector<std::pair<int, int>> processing_times_vector;
   for (int i = 0; i < this->pmsp_problem_.getJobs() + 1; i++) {
     processing_times_vector.push_back(std::make_pair(processing_times[i], i));
   }
-  // Ordenar el vector
+  // Sort the vector
   std::sort(processing_times_vector.begin(), processing_times_vector.end());
   std::vector<std::pair<int, int>> minimal_time;
   for (int i = 0; i < this->pmsp_problem_.getMachines(); i++) {
@@ -62,13 +63,12 @@ std::vector<std::pair<int, int>> GreedyPmsp::selectMinimalTime(int* processing_t
 }
 
 std::pair<int, int> GreedyPmsp::selectOptimusTime(int* selectRow, std::vector<int>& checkedPositions) {
-  // Seleccionar el valor mínimo de la fila y guardar una tupla con el valor y la posición
-  std::pair<int, int> minimal_time = std::make_pair(selectRow[0], 0);
-  for (int i = 1; i < this->pmsp_problem_.getJobs() + 1; i++) {
+  std::pair<int, int> minimal_time = std::make_pair(9999999, 0);
+  for (int i = 0; i < this->pmsp_problem_.getJobs(); i++) {
     if (selectRow[i] < minimal_time.first) {
-      // Asegurate de que el indice no esté en checkedPositions
       if (std::find(checkedPositions.begin(), checkedPositions.end(), i) == checkedPositions.end()) {
-        minimal_time = std::make_pair(selectRow[i], i);
+        minimal_time.first = selectRow[i];
+        minimal_time.second = i;
       }
     }
   }
