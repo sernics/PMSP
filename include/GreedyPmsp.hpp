@@ -13,9 +13,9 @@ class GreedyPmsp : public Pmsp {
     // Solve method from Pmsp class
     PmspSolution Solve() override; 
   protected:
-    // Method to select the initial jobs having in mind the processing time
+    // Method to obtein the initial jobs having add the processing times and the setup times
     int* getInitialJobs();
-    // Method to select the minimal time
+    // Method to select the minimal time from the getInitialJobs method
     std::vector<std::pair<int, int>> selectMinimalTime(int* processing_times);
     // Method to select the optimus time for the machine
     virtual std::pair<int, int> selectOptimusTime(int* selectRow, std::vector<int>& checkedPositions);
