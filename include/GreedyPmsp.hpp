@@ -12,14 +12,15 @@ class GreedyPmsp : public Pmsp {
     ~GreedyPmsp();
     // Solve method from Pmsp class
     PmspSolution Solve() override; 
-  private:
-    PmspProblem pmsp_problem_;
+  protected:
     // Method to select the initial jobs having in mind the processing time
     int* getInitialJobs();
     // Method to select the minimal time
     std::vector<std::pair<int, int>> selectMinimalTime(int* processing_times);
     // Method to select the optimus time for the machine
-    std::pair<int, int> selectOptimusTime(int* selectRow, std::vector<int>& checkedPositions);
+    virtual std::pair<int, int> selectOptimusTime(int* selectRow, std::vector<int>& checkedPositions);
+  private:
+    PmspProblem pmsp_problem_;
 };
 
 #endif // __GREEDY_PMSP_HPP__
