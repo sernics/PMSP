@@ -12,6 +12,7 @@ class GraspPmsp : public GreedyPmsp {
     // Method to select the optimus time for the machine
     std::pair<int, int> selectOptimusTime(int* selectRow, std::vector<int>& checkedPositions) override;
   private:  
+    PmspProblem pmsp_problem_;
 };
 
 #endif // __GRASP_PMSP_HPP__

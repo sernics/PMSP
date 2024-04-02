@@ -20,7 +20,6 @@ PmspSolution GreedyPmsp::Solve() {
   PmspSolution solution(this->pmsp_problem_);
   solution.pushInitialSolution(checkedPositions);
   int** setup = this->pmsp_problem_.getSetup();
-  std::cout << std::endl;
   while (int(checkedPositions.size()) < this->pmsp_problem_.getJobs()) {
     for (int i = 0; i < this->pmsp_problem_.getMachines(); i++) {
       if (int(checkedPositions.size()) == this->pmsp_problem_.getJobs()) {
@@ -28,8 +27,10 @@ PmspSolution GreedyPmsp::Solve() {
       }
       int* selectRow = setup[checkedPositions[i]];
       std::pair<int, int> optimus_time = selectOptimusTime(selectRow, checkedPositions);
-      checkedPositions.push_back(optimus_time.second);
-      solution.pushIndex(i, optimus_time.second);
+      if (optimus_time.second != 0) {
+        checkedPositions.push_back(optimus_time.second);
+        solution.pushIndex(i, optimus_time.second);
+      }
     }
   }
   return solution;
