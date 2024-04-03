@@ -10,12 +10,14 @@ class PmspProblem {
     int getMachines() const { return machines_; }
     int* getProcessingTimes() const { return processing_times_; }
     int** getSetup() const { return matrix_; }
+    int** getTasks() const { return tasks_; }
     void PrintMatrix();
   private:
     int jobs_;
     int machines_;
     int* processing_times_;
     int** matrix_;
+    int** tasks_;
 };
 
 #endif // PMSP_PROBLEM_HPP
