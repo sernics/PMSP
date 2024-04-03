@@ -2,24 +2,26 @@
 #define __PMSP_SOLUTION_HPP__
 
 #include "PmspProblem.hpp"
-#include <vector>
+
+#include <queue>
 
 class PmspSolution {
   public:
-    PmspSolution(PmspProblem& pmsp_problem);
+    PmspSolution(PmspProblem problem);
     ~PmspSolution();
-    void pushInitialSolution(std::vector<int>& solution); 
-    void pushIndex(int i, int value);
-    // Overload the [] operator to access the solution
-    std::vector<int>& operator[](int i) {
-      return solution_[i];
-    }
-    int getLastElement(int i);
-    void PrintSolution();
-    int calculateTCT();
+    int** getMachines() const { return machines_; }
+    int** getTasks() const { return tasks_; }
+    void setGreedyTask(std::queue<int>& positions, bool* inserted);
+    int calculateTct();
+    void setInitialMachineValues(int* values);
+    void printSolution();
   private:
-    std::vector<std::vector<int>> solution_;
-    PmspProblem pmsp_problem_;
+    int** machines_;                // The diferent machines with the tasks
+    int sizeOfMachines_;            // The number of machines
+    int** tasks_;                   // The tasks of the problem (tij)
+    int* sizeOfMachineTasks_;       // The number of tasks of each machine
+
+    int tct(int task);
 };
 
 #endif // __PMSP_SOLUTION_HPP__

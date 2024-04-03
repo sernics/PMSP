@@ -21,28 +21,6 @@ PmspProblem::PmspProblem(int jobs, int machines, int* processing_times, int** ma
       tasks_[i][j] = this->processing_times_[j] + this->matrix_[i][j];
     }
   }
-  // Print processing times
-  std::cout << "Processing times: ";
-  for (int i = 0; i < jobs_; i++) {
-    std::cout << processing_times_[i] << ",";
-  }
-  std::cout << std::endl;
-  // Print setup times
-  std::cout << "Setup times: " << std::endl;
-  for (int i = 0; i < jobs_ + 1; i++) {
-    for (int j = 0; j < jobs_ + 1; j++) {
-      std::cout << matrix_[i][j] << ",";
-    }
-    std::cout << std::endl;
-  }
-  // Print tasks
-  std::cout << "Tasks: " << std::endl;
-  for (int i = 0; i < jobs_; i++) {
-    for (int j = 0; j < jobs_; j++) {
-      std::cout << tasks_[i][j] << ",";
-    }
-    std::cout << std::endl;
-  }
 }
 
 PmspProblem::~PmspProblem() {
@@ -52,6 +30,15 @@ void PmspProblem::PrintMatrix() {
   for (int i = 0; i < jobs_ + 1; i++) {
     for (int j = 0; j < jobs_ + 1; j++) {
       std::cout << matrix_[i][j] << " ";
+    }
+    std::cout << std::endl;
+  }
+}
+
+void PmspProblem::PrintTasks() {
+  for (int i = 0; i < jobs_; i++) {
+    for (int j = 0; j < jobs_; j++) {
+      std::cout << tasks_[i][j] << " ";
     }
     std::cout << std::endl;
   }

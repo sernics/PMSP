@@ -12,6 +12,7 @@ class PmspProblem {
     int** getSetup() const { return matrix_; }
     int** getTasks() const { return tasks_; }
     void PrintMatrix();
+    void PrintTasks();
   private:
     int jobs_;
     int machines_;
