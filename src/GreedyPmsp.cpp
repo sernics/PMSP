@@ -1,14 +1,12 @@
 #include "../include/GreedyPmsp.hpp"
 
-#include <iostream>
-#include <queue>
-
 GreedyPmsp::GreedyPmsp(PmspProblem problem) : pmsp_problem_(problem) {
-  inserted_ = new bool[pmsp_problem_.getJobs()];
+  inserted_ = new bool[pmsp_problem_.getJobs() + 1];
   for (int i = 0; i < pmsp_problem_.getJobs(); i++) {
     inserted_[i] = false;
   }
-  insertedValues_ = 0;
+  inserted_[0] = true;
+  insertedValues_ = 1;
   actualMachine_ = 0;
 }
 
@@ -16,31 +14,20 @@ PmspSolution GreedyPmsp::solve() {
   PmspSolution solution(pmsp_problem_);
   int* positionsToCheck = this->getInitialMachineValues();
   solution.setInitialMachineValues(positionsToCheck);
-  std::queue<int> positions;
-  for (int i = 0; i < pmsp_problem_.getMachines(); i++) {
-    positions.push(positionsToCheck[i]);
-  }
+  int index = 0;
   while (insertedValues_ < pmsp_problem_.getJobs()) {
-    insertTask(solution, positions);
-    insertedValues_++;
+    insertTask(solution, index);
+    index++;
+    if (index > this->pmsp_problem_.getMachines()) {
+      index = 0;
+    }
   }
-  solution.printSolution();
   return solution;
 }
 
-void GreedyPmsp::insertTask(PmspSolution& solution, std::queue<int>& positions) {
-  // Print inserted values
-  std::cout << "Inserted values: ";
-  for (int i = 0; i < pmsp_problem_.getJobs(); i++) {
-    std::cout << inserted_[i] << " ";
-  }
-  std::cout << std::endl;
-  solution.setGreedyTask(positions, this->inserted_); 
-  std::cout << "Post, inserted values: ";  
-  for (int i = 0; i < pmsp_problem_.getJobs(); i++) {
-    std::cout << inserted_[i] << " ";
-  }
-  std::cout << std::endl;
+void GreedyPmsp::insertTask(PmspSolution& solution, int index) {
+  solution.setGreedyTask(index, this->inserted_); 
+  insertedValues_++;
   return;
 }
 
@@ -59,6 +46,7 @@ int* GreedyPmsp::getInitialMachineValues() {
       }
     }
     inserted_[minIndex] = true;
+    insertedValues_++;
     values[j] = minIndex;
   }
   return values;

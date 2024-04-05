@@ -11,12 +11,12 @@ PmspProblem::PmspProblem(int jobs, int machines, int* processing_times, int** ma
     processing_times_[i + 1] = processing_times[i];
   }
   matrix_ = matrix;
-  tasks_ = new int*[jobs_];
-  for (int i = 0; i < jobs_; i++) {
+  tasks_ = new int*[jobs_ + 1];
+  for (int i = 0; i < jobs_ + 1; i++) {
     tasks_[i] = new int[jobs_];
   }
-  for (int i = 0; i < jobs_; i++) {
-    for (int j = 0; j < jobs_; j++) {
+  for (int i = 0; i < jobs_ + 1; i++) {
+    for (int j = 0; j < jobs_ + 1; j++) {
       if (i == j) continue;
       tasks_[i][j] = this->processing_times_[j] + this->matrix_[i][j];
     }
@@ -36,8 +36,8 @@ void PmspProblem::PrintMatrix() {
 }
 
 void PmspProblem::PrintTasks() {
-  for (int i = 0; i < jobs_; i++) {
-    for (int j = 0; j < jobs_; j++) {
+  for (int i = 0; i < jobs_ + 1; i++) {
+    for (int j = 0; j < jobs_ + 1; j++) {
       std::cout << tasks_[i][j] << " ";
     }
     std::cout << std::endl;

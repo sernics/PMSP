@@ -5,15 +5,13 @@
 #include "PmspProblem.hpp"
 #include "PmspSolution.hpp"
 
-#include <queue>
-
 class GreedyPmsp : public Pmsp {
   public:
     GreedyPmsp() = default;
     GreedyPmsp(PmspProblem problem);
     PmspSolution solve() override;
   protected:
-    void insertTask(PmspSolution& solution, std::queue<int>& positions);
+    void insertTask(PmspSolution& solution, int index);
   private:
     PmspProblem pmsp_problem_;
     bool* inserted_;

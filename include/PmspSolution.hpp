@@ -3,23 +3,26 @@
 
 #include "PmspProblem.hpp"
 
-#include <queue>
-
 class PmspSolution {
   public:
     PmspSolution(PmspProblem problem);
     ~PmspSolution();
     int** getMachines() const { return machines_; }
     int** getTasks() const { return tasks_; }
-    void setGreedyTask(std::queue<int>& positions, bool* inserted);
+    void setGreedyTask(int index, bool* inserted);
     int calculateTct();
     void setInitialMachineValues(int* values);
     void printSolution();
+    PmspSolution operator=(const PmspSolution& solution);
+    void insertValue(int machine, int value, int position);
   private:
+    int jobs_;                      // The number of jobs
     int** machines_;                // The diferent machines with the tasks
     int sizeOfMachines_;            // The number of machines
     int** tasks_;                   // The tasks of the problem (tij)
     int* sizeOfMachineTasks_;       // The number of tasks of each machine
+    int* tct_values_;               // The TCT values of each machine
+    int machineIndex_;              // The actual machine index
 
     int tct(int task);
 };

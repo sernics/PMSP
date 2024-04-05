@@ -15,5 +15,6 @@ int main(int argc, char** argv) {
   PmspProblem pmspProblem = parser.Parse(filename);
   Pmsp* pmsp = new GreedyPmsp(pmspProblem); 
   PmspSolution solution = pmsp->solve();
-  return 0;
+  std::cout << "tct: " << solution.calculateTct() << std::endl;
+  solution.printSolution();
 }
