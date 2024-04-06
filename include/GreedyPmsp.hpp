@@ -11,7 +11,7 @@ class GreedyPmsp : public Pmsp {
     GreedyPmsp(PmspProblem problem);
     PmspSolution solve() override;
   protected:
-    void insertTask(PmspSolution& solution, int index);
+    void insertTask(PmspSolution& solution);
   private:
     PmspProblem pmsp_problem_;
     bool* inserted_;

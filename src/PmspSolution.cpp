@@ -73,28 +73,38 @@ void PmspSolution::insertValue(int machine, int value, int position = -1) {
   this->tct_values_[machine] = this->tct(machine);
 }
 
-void PmspSolution::setGreedyTask(int index, bool* inserted) {
-  this->machineIndex_++;
-  int* tasks = this->tasks_[index];
-  int min = 999999;
-  int taskIndex = -1;
-  for (int i = 0; i < this->jobs_; i++) {
-    if (!inserted[i]) {
-      if (tasks[i] < min) {
-        min = tasks[i];
-        taskIndex = i;
+void PmspSolution::deleteValue(int machine, int position) {
+  int* newMachine = new int[this->sizeOfMachineTasks_[machine] - 1];
+  for (int i = 0; i < position; i++) {
+    newMachine[i] = this->machines_[machine][i];
+  }
+  for (int i = position; i < this->sizeOfMachineTasks_[machine] - 1; i++) {
+    newMachine[i] = this->machines_[machine][i + 1];
+  }
+  this->machines_[machine] = newMachine;
+  this->sizeOfMachineTasks_[machine]--;
+  this->tct_values_[machine] = this->tct(machine);
+}
+
+void PmspSolution::setGreedyTask(bool* inserted) {
+  int min = 99999999;
+  int minIndex = -1;
+  int machine = -1;
+  for (int i = 0; i < this->sizeOfMachines_; i++) {
+    for (int j = 1; j < this->jobs_ + 1; j++) {
+      if (!inserted[j]) {
+        PmspSolution solution = *this;
+        solution.insertValue(i, j);
+        if (solution.tct(i) < min) {
+          min = solution.tct(i);
+          minIndex = j;
+          machine = i;
+        }
+        solution.deleteValue(i, solution.sizeOfMachineTasks_[i] - 1);
       }
     }
   }
-  inserted[taskIndex] = true;
-  this->insertValue(index, taskIndex);
-  return;
-}
-
-PmspSolution PmspSolution::operator=(const PmspSolution& solution) {
-  this->machines_ = solution.machines_;
-  this->sizeOfMachines_ = solution.sizeOfMachines_;
-  this->tasks_ = solution.tasks_;
-  this->sizeOfMachineTasks_ = solution.sizeOfMachineTasks_;
-  return *this;
+  // std::cout << "Inserting " << minIndex << " in machine " << machine << std::endl;
+  this->insertValue(machine, minIndex);
+  inserted[minIndex] = true;
 }

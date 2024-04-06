@@ -14,19 +14,14 @@ PmspSolution GreedyPmsp::solve() {
   PmspSolution solution(pmsp_problem_);
   int* positionsToCheck = this->getInitialMachineValues();
   solution.setInitialMachineValues(positionsToCheck);
-  int index = 0;
-  while (insertedValues_ < pmsp_problem_.getJobs()) {
-    insertTask(solution, index);
-    index++;
-    if (index > this->pmsp_problem_.getMachines()) {
-      index = 0;
-    }
+  while (insertedValues_ < pmsp_problem_.getJobs() + 1) {
+    insertTask(solution);
   }
   return solution;
 }
 
-void GreedyPmsp::insertTask(PmspSolution& solution, int index) {
-  solution.setGreedyTask(index, this->inserted_); 
+void GreedyPmsp::insertTask(PmspSolution& solution) {
+  solution.setGreedyTask(this->inserted_); 
   insertedValues_++;
   return;
 }
