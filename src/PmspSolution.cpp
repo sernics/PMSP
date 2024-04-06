@@ -24,7 +24,7 @@ int PmspSolution::tct(int machine) {
     result += tasks[i] * (this->sizeOfMachineTasks_[machine] - i);
   }
   this->tct_values_[machine] = result;
-  this->machineIndex_ = 0;
+  delete[] tasks;
   return result;
 }
 
@@ -87,6 +87,7 @@ void PmspSolution::deleteValue(int machine, int position) {
 }
 
 void PmspSolution::setGreedyTask(bool* inserted) {
+  // Need to do: Implement a functionality to select the best machine position
   int min = 99999999;
   int minIndex = -1;
   int machine = -1;

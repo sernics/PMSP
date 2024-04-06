@@ -11,6 +11,7 @@ class PmspSolution {
     int** getMachines() const { return machines_; }
     int** getTasks() const { return tasks_; }
     void setGreedyTask(bool* inserted);
+    void setGraspTask(bool* inserted);
     int calculateTct();
     void setInitialMachineValues(int* values);
     void printSolution();
@@ -24,7 +25,6 @@ class PmspSolution {
     int** tasks_;                   // The tasks of the problem (tij)
     int* sizeOfMachineTasks_;       // The number of tasks of each machine
     int* tct_values_;               // The TCT values of each machine
-    int machineIndex_;              // The actual machine index
 
     int tct(int task);
 };
