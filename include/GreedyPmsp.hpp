@@ -12,9 +12,9 @@ class GreedyPmsp : public Pmsp {
     PmspSolution solve() override;
   protected:
     virtual void insertTask(PmspSolution& solution);
+    bool* inserted_;
   private:
     PmspProblem pmsp_problem_;
-    bool* inserted_;
     int insertedValues_;
     int actualMachine_;
 

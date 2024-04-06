@@ -16,13 +16,13 @@ PmspSolution GreedyPmsp::solve() {
   solution.setInitialMachineValues(positionsToCheck);
   while (insertedValues_ < pmsp_problem_.getJobs() + 1) {
     insertTask(solution);
+    insertedValues_++;
   }
   return solution;
 }
 
 void GreedyPmsp::insertTask(PmspSolution& solution) {
   solution.setGreedyTask(this->inserted_); 
-  insertedValues_++;
   return;
 }
 

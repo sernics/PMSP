@@ -109,3 +109,27 @@ void PmspSolution::setGreedyTask(bool* inserted) {
   this->insertValue(machine, minIndex);
   inserted[minIndex] = true;
 }
+
+void PmspSolution::setGraspTask(bool* inserted) {
+  // Need to do: Implement a functionality to select the best machine position
+  int min = 99999999;
+  int minIndex = -1;
+  int machine = -1;
+  for (int i = 0; i < this->sizeOfMachines_; i++) {
+    for (int j = 1; j < this->jobs_ + 1; j++) {
+      if (!inserted[j]) {
+        PmspSolution solution = *this;
+        solution.insertValue(i, j);
+        if (solution.tct(i) < min) {
+          min = solution.tct(i);
+          minIndex = j;
+          machine = i;
+        }
+        solution.deleteValue(i, solution.sizeOfMachineTasks_[i] - 1);
+      }
+    }
+  }
+  // std::cout << "Inserting " << minIndex << " in machine " << machine << std::endl;
+  this->insertValue(machine, minIndex);
+  inserted[minIndex] = true;
+}
