@@ -15,7 +15,6 @@ class PmspSolution {
     int calculateTct();
     void setInitialMachineValues(int* values);
     void printSolution();
-    PmspSolution operator=(const PmspSolution& solution);
     void insertValue(int machine, int value, int position);
     void deleteValue(int machine, int position);
   private:

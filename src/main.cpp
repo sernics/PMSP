@@ -3,7 +3,7 @@
 #include "../include/PmspSolution.hpp"
 #include "../include/Pmsp.hpp"
 #include "../include/GreedyPmsp.hpp"
-#include "../include/GraspPmsp.hpp"
+#include "../include/ExecuteGrasp.hpp"
 
 #include <iostream>
 
@@ -18,8 +18,8 @@ int main(int argc, char** argv) {
   PmspSolution solution = pmsp->solve();
   solution.printSolution();
   std::cout << "tct: " << solution.calculateTct() << std::endl;
-  Pmsp* pmsp2 = new GraspPmsp(pmspProblem); 
-  PmspSolution solution2 = pmsp2->solve();
+  ExecuteGrasp executeGrasp(pmspProblem);
+  PmspSolution solution2 = executeGrasp.execute();
   solution2.printSolution();
   std::cout << "tct: " << solution2.calculateTct() << std::endl;
 }
