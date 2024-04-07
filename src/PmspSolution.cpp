@@ -1,6 +1,7 @@
 #include "../include/PmspSolution.hpp"
 
 #include <iostream>
+#include <random>
 
 PmspSolution::PmspSolution(PmspProblem problem) {
   this->jobs_ = problem.getJobs();
@@ -87,7 +88,6 @@ void PmspSolution::deleteValue(int machine, int position) {
 }
 
 void PmspSolution::setGreedyTask(bool* inserted) {
-  // Need to do: Implement a functionality to select the best machine position
   int min = 99999999;
   int minIndex = -1;
   int machine = -1;
@@ -111,25 +111,45 @@ void PmspSolution::setGreedyTask(bool* inserted) {
 }
 
 void PmspSolution::setGraspTask(bool* inserted) {
-  // Need to do: Implement a functionality to select the best machine position
+  const int K = 3; // Number of values to select
   int min = 99999999;
   int minIndex = -1;
   int machine = -1;
   for (int i = 0; i < this->sizeOfMachines_; i++) {
-    for (int j = 1; j < this->jobs_ + 1; j++) {
-      if (!inserted[j]) {
-        PmspSolution solution = *this;
-        solution.insertValue(i, j);
-        if (solution.tct(i) < min) {
-          min = solution.tct(i);
-          minIndex = j;
-          machine = i;
+    std::vector<int> candidates;
+    for (int kValue = 0; kValue < K; kValue++) {
+      int selectMin = 99999999;
+      int selectMinIndex = -1;
+      for (int j = 1; j < this->jobs_ + 1; j++) {
+        if (!inserted[j]) {
+          // If !isInCandidates
+          if (std::find(candidates.begin(), candidates.end(), j) == candidates.end()) {
+            if (this->tasks_[this->machines_[i][this->sizeOfMachineTasks_[i] - 1]][j] < selectMin) {
+              selectMin = this->tasks_[this->machines_[i][this->sizeOfMachineTasks_[i] - 1]][j];
+              selectMinIndex = j;
+            }
+          }
         }
-        solution.deleteValue(i, solution.sizeOfMachineTasks_[i] - 1);
+      }
+      if (selectMinIndex != -1) {
+        candidates.push_back(selectMinIndex);
       }
     }
+    // Seleccionar al azar uno de los candidatos
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, candidates.size() - 1);
+    int randomIndex = dis(gen);
+    int randomValue = candidates[randomIndex];
+    PmspSolution solution = *this;
+    solution.insertValue(i, randomValue);
+    if (solution.tct(i) < min) {
+      min = solution.tct(i);
+      minIndex = randomValue;
+      machine = i;
+    }
+    solution.deleteValue(i, solution.sizeOfMachineTasks_[i] - 1);
   }
-  // std::cout << "Inserting " << minIndex << " in machine " << machine << std::endl;
   this->insertValue(machine, minIndex);
   inserted[minIndex] = true;
 }
