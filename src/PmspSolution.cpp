@@ -156,4 +156,10 @@ void PmspSolution::setGraspTask(bool* inserted) {
 
 void PmspSolution::swapValues(int machine1, int position1, int machine2, int position2) {
   std::swap(this->machines_[machine1][position1], this->machines_[machine2][position2]);
+  if (machine1 != machine2) {
+    this->tct(machine1);
+    this->tct(machine2);
+  } else {
+    this->tct(machine1);
+  }
 }

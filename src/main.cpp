@@ -4,6 +4,7 @@
 #include "../include/Pmsp.hpp"
 #include "../include/GreedyPmsp.hpp"
 #include "../include/ExecuteGrasp.hpp"
+#include "../include/EnvironmentStructures.hpp"
 
 #include <iostream>
 
@@ -22,4 +23,9 @@ int main(int argc, char** argv) {
   PmspSolution solution2 = executeGrasp.execute();
   solution2.printSolution();
   std::cout << "tct: " << solution2.calculateTct() << std::endl;
+  EnvironmentStructures es(solution2);
+  es.intraMachinesTaskExchange();
+  es.getSolution().printSolution();
+  std::cout << "tct 'mejorado': " << es.getSolution().calculateTct() << std::endl;
+  return 0;
 }
