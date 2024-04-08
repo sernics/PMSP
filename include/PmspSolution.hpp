@@ -17,6 +17,7 @@ class PmspSolution {
     void printSolution();
     void insertValue(int machine, int value, int position);
     void deleteValue(int machine, int position);
+    void swapValues(int machine1, int position1, int machine2, int position2);
   private:
     int jobs_;                      // The number of jobs
     int** machines_;                // The diferent machines with the tasks
