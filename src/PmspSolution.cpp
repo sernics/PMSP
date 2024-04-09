@@ -14,7 +14,7 @@ PmspSolution::PmspSolution(PmspProblem problem) {
 
 PmspSolution::~PmspSolution() {}
 
-int PmspSolution::tct(int machine) {
+int PmspSolution::tct(int machine) const {
   int result = 0;
   int* tasks = new int[this->sizeOfMachineTasks_[machine]];
   tasks[0] = this->tasks_[0][machines_[machine][0]];
@@ -29,7 +29,7 @@ int PmspSolution::tct(int machine) {
   return result;
 }
 
-int PmspSolution::calculateTct() {
+int PmspSolution::calculateTct() const {
   int result = 0;
   for (int i = 0; i < this->sizeOfMachines_; i++) {
     result += this->tct_values_[i];
@@ -47,7 +47,7 @@ void PmspSolution::setInitialMachineValues(int* values) {
   }
 }
 
-void PmspSolution::printSolution() {
+void PmspSolution::printSolution() const {
   for (int i = 0; i < this->sizeOfMachines_; i++) {
     std::cout << "Machine " << i << ": ";
     for (int j = 0; j < this->sizeOfMachineTasks_[i]; j++) {
@@ -58,20 +58,22 @@ void PmspSolution::printSolution() {
 }
 
 void PmspSolution::insertValue(int machine, int value, int position = -1) {
-  if (position == -1) {
+  if (position == -1) { 
     position = this->sizeOfMachineTasks_[machine];
   }
-  int* newMachine = new int[this->sizeOfMachineTasks_[machine] + 1];
-  for (int i = 0; i < position; i++) {
-    newMachine[i] = this->machines_[machine][i];
+  if (this->sizeOfMachineTasks_[machine] > 0) {
+    int* newMachine = new int[this->sizeOfMachineTasks_[machine] + 1];
+    for (int i = 0; i < position; i++) {
+      newMachine[i] = this->machines_[machine][i];
+    }
+    newMachine[position] = value;
+    for (int i = position + 1; i < this->sizeOfMachineTasks_[machine] + 1; i++) {
+      newMachine[i] = this->machines_[machine][i - 1];
+    }
+    this->machines_[machine] = newMachine;
+    this->sizeOfMachineTasks_[machine]++;
+    this->tct_values_[machine] = this->tct(machine);
   }
-  newMachine[position] = value;
-  for (int i = position + 1; i < this->sizeOfMachineTasks_[machine] + 1; i++) {
-    newMachine[i] = this->machines_[machine][i - 1];
-  }
-  this->machines_[machine] = newMachine;
-  this->sizeOfMachineTasks_[machine]++;
-  this->tct_values_[machine] = this->tct(machine);
 }
 
 void PmspSolution::deleteValue(int machine, int position) {
@@ -162,4 +164,57 @@ void PmspSolution::swapValues(int machine1, int position1, int machine2, int pos
   } else {
     this->tct(machine1);
   }
+}
+
+// Swap position to positionResult and move the rest of the values
+void PmspSolution::moveValue(int machine1, int position, int positionResult) {
+  int value = this->machines_[machine1][position];
+  if (position < positionResult) {
+    for (int i = position; i < positionResult; i++) {
+      this->machines_[machine1][i] = this->machines_[machine1][i + 1];
+    }
+  } else {
+    for (int i = position; i > positionResult; i--) {
+      this->machines_[machine1][i] = this->machines_[machine1][i - 1];
+    }
+  }
+  this->machines_[machine1][positionResult] = value;
+  this->tct(machine1);
+}
+
+PmspSolution PmspSolution::getCopy() const {
+  PmspSolution solution;
+  solution.jobs_ = this->jobs_;
+  solution.machines_ = new int*[this->sizeOfMachines_];
+  solution.sizeOfMachines_ = this->sizeOfMachines_;
+  solution.tasks_ = this->tasks_;
+  solution.sizeOfMachineTasks_ = new int[this->sizeOfMachines_];
+  solution.tct_values_ = new int[this->sizeOfMachines_];
+  for (int i = 0; i < this->sizeOfMachines_; i++) {
+    solution.machines_[i] = new int[this->sizeOfMachineTasks_[i]];
+    for (int j = 0; j < this->sizeOfMachineTasks_[i]; j++) {
+      solution.machines_[i][j] = this->machines_[i][j];
+    }
+    solution.sizeOfMachineTasks_[i] = this->sizeOfMachineTasks_[i];
+    solution.tct_values_[i] = this->tct_values_[i];
+  }
+  return solution;
+}
+
+PmspSolution& PmspSolution::operator=(const PmspSolution& solution) {
+  this->jobs_ = solution.jobs_;
+  this->machines_ = solution.machines_;
+  this->sizeOfMachines_ = solution.sizeOfMachines_;
+  this->tasks_ = solution.tasks_;
+  this->sizeOfMachineTasks_ = solution.sizeOfMachineTasks_;
+  this->tct_values_ = solution.tct_values_;
+  return *this;
+}
+
+PmspSolution PmspSolution::exchange(int i, int j, int machine1, int machine2) {
+  PmspSolution solution = this->getCopy();
+  int value = solution.machines_[machine1][i];
+  solution.deleteValue(machine1, i);
+  solution.insertValue(machine2, value, j);
+  return solution;
 }

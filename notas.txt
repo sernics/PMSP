@@ -1,0 +1,3 @@
+shaking -> Reinserción entre máquinas (al azar)
+
+Primero un movimiento al azar, luego dos movimientos al azar, luego tres movimientos al azar, etc. (Establecer un límite de movimientos al azar)

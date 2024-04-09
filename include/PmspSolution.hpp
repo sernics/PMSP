@@ -12,19 +12,26 @@ class PmspSolution {
     // Setters
     void setGreedyTask(bool* inserted);
     void setGraspTask(bool* inserted);
+    void reduceSizeOfMachine(int machine) { sizeOfMachineTasks_[machine]--; }
     // Getters
     int** getMachines() const { return machines_; }
     int** getTasks() const { return tasks_; }
     int getSizeOfMachine(int machine) const { return sizeOfMachineTasks_[machine]; }
     int getMachineSize() const { return sizeOfMachines_; }
+    PmspSolution getCopy() const;
     // Methods
-    int calculateTct();
-    int tct(int machine);
+    int calculateTct() const;
+    int tct(int machine) const;
+    void printSolution() const;
     void setInitialMachineValues(int* values);
-    void printSolution();
+    PmspSolution exchange(int i, int j, int machine1, int machine2);
+    // Methods to modify the solution
     void insertValue(int machine, int value, int position);
     void deleteValue(int machine, int position);
     void swapValues(int machine1, int position1, int machine2, int position2);
+    void moveValue(int machine1, int position, int positionResult);
+    // Operators
+    PmspSolution& operator=(const PmspSolution& solution);
   private:
     // Attributes
     int jobs_;                      // The number of jobs
