@@ -3,10 +3,10 @@
 
 #include "EnvironmentStructures.hpp"
 
-class InterExchange : public EnvironmentStructures {
+class InterReinsertion : public EnvironmentStructures {
   public:
-    InterExchange() = default;
-    ~InterExchange() = default;
+    InterReinsertion() = default;
+    ~InterReinsertion() = default;
     PmspSolution getBestNeighbour(const PmspSolution& solution) override;
     void reinsert(PmspSolution& solution, int i, int j, int machine1, int machine2);
 };

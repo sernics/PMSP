@@ -4,8 +4,6 @@
 #include "../include/Pmsp.hpp"
 #include "../include/GreedyPmsp.hpp"
 #include "../include/ExecuteGrasp.hpp"
-#include "../include/EnvironmentStructures.hpp"
-#include "../include/InterExchange.hpp"
 
 #include <iostream>
 
@@ -28,13 +26,5 @@ int main(int argc, char** argv) {
   graspSolution.printSolution();
   std::cout << "tct: " << graspSolution.calculateTct() << std::endl << std::endl;
 
-  // EnvironmentStructures* innerExchange = new InnerExchange();
-  // PmspSolution bestNeighbour = innerExchange->getBestNeighbour(graspSolution);
-  // std::cout << bestNeighbour.calculateTct() << std::endl;
-
-  EnvironmentStructures* interExchange = new InterExchange();
-  PmspSolution bestNeighbour = interExchange->getBestNeighbour(graspSolution);
-  bestNeighbour.printSolution();
-  std::cout << bestNeighbour.calculateTct() << std::endl;
   return 0;
 }
