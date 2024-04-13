@@ -4,6 +4,8 @@
 #include "../include/Pmsp.hpp"
 #include "../include/GreedyPmsp.hpp"
 #include "../include/ExecuteGrasp.hpp"
+#include "../include/EnvironmentStructures.hpp"
+#include "../include/InterReinsertion.hpp"
 
 #include <iostream>
 
@@ -25,6 +27,5 @@ int main(int argc, char** argv) {
   std::cout << "Grasp solution" << std::endl;
   graspSolution.printSolution();
   std::cout << "tct: " << graspSolution.calculateTct() << std::endl << std::endl;
-
   return 0;
 }

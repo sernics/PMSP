@@ -53,7 +53,7 @@ void PmspSolution::printSolution() const {
     for (int j = 0; j < this->sizeOfMachineTasks_[i]; j++) {
       std::cout << this->machines_[i][j] << " ";
     }
-    std::cout << std::endl;
+    std::cout << "-> " << this->tct_values_[i] << std::endl;
   }
 }
 
