@@ -4,8 +4,7 @@
 #include "../include/Pmsp.hpp"
 #include "../include/GreedyPmsp.hpp"
 #include "../include/ExecuteGrasp.hpp"
-#include "../include/EnvironmentStructures.hpp"
-#include "../include/InterReinsertion.hpp"
+#include "../include/VariableNeighbourDescent.hpp"
 
 #include <iostream>
 
@@ -27,5 +26,11 @@ int main(int argc, char** argv) {
   std::cout << "Grasp solution" << std::endl;
   graspSolution.printSolution();
   std::cout << "tct: " << graspSolution.calculateTct() << std::endl << std::endl;
+
+  VariableNeighbourDescent vnd;
+  PmspSolution vndSolution = vnd.execute(graspSolution);
+  std::cout << "VND solution" << std::endl;
+  vndSolution.printSolution();
+  std::cout << "tct: " << vndSolution.calculateTct() << std::endl << std::endl;
   return 0;
 }
