@@ -27,10 +27,10 @@ int main(int argc, char** argv) {
   graspSolution.printSolution();
   std::cout << "tct: " << graspSolution.calculateTct() << std::endl << std::endl;
 
-  VariableNeighbourDescent vnd;
-  PmspSolution vndSolution = vnd.execute(graspSolution);
-  std::cout << "VND solution" << std::endl;
-  vndSolution.printSolution();
-  std::cout << "tct: " << vndSolution.calculateTct() << std::endl << std::endl;
+  for (size_t  i = 0; i < 1000; i++) {
+    VariableNeighbourDescent vnd;
+    PmspSolution vndSolution = vnd.execute(graspSolution);
+    std::cout << "VND solution " << i << std::endl;
+  }
   return 0;
 }

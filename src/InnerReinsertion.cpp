@@ -1,5 +1,7 @@
 #include "../include/InnerReinsertion.hpp"
 
+#include <iostream>
+
 PmspSolution InnerReinsertion::getBestNeighbour(const PmspSolution& solution) {
   PmspSolution bestNeighbour = solution.getCopy();
   for (int i = 0; i < bestNeighbour.getMachineSize(); i++) {

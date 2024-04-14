@@ -1,5 +1,7 @@
 #include "../include/OuterReinsertion.hpp"
 
+#include <iostream>
+
 PmspSolution OuterReinsertion::getBestNeighbour(const PmspSolution& solution) {
   PmspSolution bestNeighbour = solution.getCopy();
 

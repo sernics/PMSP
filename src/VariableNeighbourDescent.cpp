@@ -10,7 +10,7 @@ PmspSolution VariableNeighbourDescent::execute(PmspSolution& initialSolution) {
   EnvironmentStructures* environment;
   while (n <= 3) {
     PmspSolution newSolution = bestSolution.getCopy();
-    std::cout << "Case: " << n << "\n";
+    std::cout << "Case " <<  n << std::endl;
     switch(n) {
       case 0:
         environment = new OuterReinsertion();
@@ -28,8 +28,6 @@ PmspSolution VariableNeighbourDescent::execute(PmspSolution& initialSolution) {
         break;
     }
     newSolution = environment->getBestNeighbour(newSolution);
-    newSolution.printSolution();
-    std::cout << newSolution.calculateTct() << std::endl;
     if (newSolution.calculateTct() < bestSolution.calculateTct() && newSolution.calculateTct() > 0) {
       bestSolution = newSolution;
       n = 0;

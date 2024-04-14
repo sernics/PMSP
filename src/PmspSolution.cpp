@@ -61,7 +61,6 @@ void PmspSolution::insertValue(int machine, int value, int position = -1) {
   if (position == -1) { 
     position = this->sizeOfMachineTasks_[machine];
   }
-  // AQUI QUITE EL IF !!!!!!!!!!!!!!!!!!!!
   int* newMachine = new int[this->sizeOfMachineTasks_[machine] + 1];
   for (int i = 0; i < position; i++) {
     newMachine[i] = this->machines_[machine][i];
