@@ -21,3 +21,6 @@ VND {
   N3: Reinserción intra (al azar)
   N4: Swap entre máquinas (al azar)
 }
+
+
+RECUERDA QUE EN ALGUN SITO DEL INNER O OUTER EXCHANGE TIENES UN BUG. REVISAR

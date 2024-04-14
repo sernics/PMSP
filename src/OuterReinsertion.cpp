@@ -13,6 +13,7 @@ PmspSolution OuterReinsertion::getBestNeighbour(const PmspSolution& solution) {
             reinsert(neighbour, i, j, k, l);
             if (neighbour.calculateTct() < bestNeighbour.calculateTct()) {
               bestNeighbour = neighbour;
+              return bestNeighbour;
             }
           }
         }

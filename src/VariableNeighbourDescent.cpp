@@ -13,10 +13,10 @@ PmspSolution VariableNeighbourDescent::execute(PmspSolution& initialSolution) {
     std::cout << "Case: " << n << "\n";
     switch(n) {
       case 0:
-        environment = new OuterExchange();
+        environment = new OuterReinsertion();
         break;
       case 1:
-        environment = new OuterExchange();
+        environment = new InnerReinsertion();
         break;
       case 2: 
         environment = new OuterExchange();
@@ -30,7 +30,7 @@ PmspSolution VariableNeighbourDescent::execute(PmspSolution& initialSolution) {
     newSolution = environment->getBestNeighbour(newSolution);
     newSolution.printSolution();
     std::cout << newSolution.calculateTct() << std::endl;
-    if (newSolution.calculateTct() < bestSolution.calculateTct()) {
+    if (newSolution.calculateTct() < bestSolution.calculateTct() && newSolution.calculateTct() > 0) {
       bestSolution = newSolution;
       n = 0;
     } else {

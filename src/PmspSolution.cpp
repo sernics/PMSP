@@ -73,7 +73,6 @@ void PmspSolution::insertValue(int machine, int value, int position = -1) {
   this->machines_[machine] = newMachine;
   this->sizeOfMachineTasks_[machine]++;
   this->tct_values_[machine] = this->tct(machine);
-
 }
 
 void PmspSolution::deleteValue(int machine, int position) {

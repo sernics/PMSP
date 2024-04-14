@@ -27,5 +27,5 @@ void OuterExchange::exchange(PmspSolution &solution, int i, int j, int machine1,
   // move value i form machine1 to machine2 in position j
   std::cout << i << " " << j << " " << machine1 << " " << machine2 << "\n";
   solution.printSolution();
-  solution.exchange(machine1, i, machine2, j);
+  solution.exchange(i, j, machine1, machine2);
 }
