@@ -216,3 +216,31 @@ PmspSolution PmspSolution::exchange(int i, int j, int machine1, int machine2) {
   solution.insertValue(machine2, value, j);
   return solution;
 }
+
+PmspSolution PmspSolution::shaking(int k) {
+  PmspSolution solution = this->getCopy(); 
+  for (int i = 0; i < k; i++) {
+    // Select aleatory machine to select a value
+    std::random_device rd2;
+    std::mt19937 generator(rd2());
+    std::uniform_int_distribution<> dis(0, this->sizeOfMachines_ - 1);
+    int machine = dis(generator);
+
+    // Select aleatory value from machine
+    std::uniform_int_distribution<> dis2(0, this->sizeOfMachineTasks_[machine] - 1);
+    int position = dis2(generator);
+
+    // Select aleatory machine to insert the value
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis3(0, this->sizeOfMachines_ - 1);
+    int machine2 = dis3(gen);
+
+    // Select aleatory position to insert the value
+    std::uniform_int_distribution<> dis4(0, this->sizeOfMachineTasks_[machine] - 1);
+    int position2 = dis4(gen);
+
+    solution.insertValue(machine2, position, position2);
+  }
+  return solution;
+}

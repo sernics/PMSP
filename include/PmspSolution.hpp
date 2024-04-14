@@ -30,6 +30,7 @@ class PmspSolution {
     void deleteValue(int machine, int position);
     void swapValues(int machine1, int position1, int machine2, int position2);
     void moveValue(int machine1, int position, int positionResult);
+    PmspSolution shaking(int k);
     // Operators
     PmspSolution& operator=(const PmspSolution& solution);
   private:

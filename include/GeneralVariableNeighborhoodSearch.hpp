@@ -6,7 +6,7 @@
 class GeneralVariableNeighbourhoodSearch : public VariableNeighbourDescent {
   public:
     GeneralVariableNeighbourhoodSearch() = default;
-    PmspSolution execute();
+    PmspSolution execute(PmspProblem& pmspProblem);
 };
 
 #endif // __GENERAL_VARIABLE_NEIGHBORHOOD_SEARCH_HPP__
