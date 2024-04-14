@@ -1,8 +1,8 @@
-#include "../include/InterExchange.hpp"
+#include "../include/OuterExchange.hpp"
 
 #include <iostream>
 
-PmspSolution InterExchange::getBestNeighbour(const PmspSolution& solution) {
+PmspSolution OuterExchange::getBestNeighbour(const PmspSolution& solution) {
   PmspSolution bestNeighbour = solution.getCopy();
   for (int i = 0; i < solution.getMachineSize(); i++) {
     for (int j = 0; j < solution.getMachineSize(); j++) {
@@ -23,7 +23,9 @@ PmspSolution InterExchange::getBestNeighbour(const PmspSolution& solution) {
   return bestNeighbour;
 }
 
-void InterExchange::exchange(PmspSolution &solution, int i, int j, int machine1, int machine2) {
+void OuterExchange::exchange(PmspSolution &solution, int i, int j, int machine1, int machine2) {
   // move value i form machine1 to machine2 in position j
-  solution = solution.exchange(i, j, machine1, machine2);
+  std::cout << i << " " << j << " " << machine1 << " " << machine2 << "\n";
+  solution.printSolution();
+  solution.exchange(machine1, i, machine2, j);
 }

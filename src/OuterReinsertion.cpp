@@ -1,6 +1,6 @@
-#include "../include/InterReinsertion.hpp"
+#include "../include/OuterReinsertion.hpp"
 
-PmspSolution InterReinsertion::getBestNeighbour(const PmspSolution& solution) {
+PmspSolution OuterReinsertion::getBestNeighbour(const PmspSolution& solution) {
   PmspSolution bestNeighbour = solution.getCopy();
 
   // Reinsertion for each job in each machine in each position of the machine. Unless if are the same machine.
@@ -23,7 +23,7 @@ PmspSolution InterReinsertion::getBestNeighbour(const PmspSolution& solution) {
   return bestNeighbour;
 }
 
-void InterReinsertion::reinsert(PmspSolution& solution, int i, int j, int machine1, int machine2) {
+void OuterReinsertion::reinsert(PmspSolution& solution, int i, int j, int machine1, int machine2) {
   int job = solution.getMachines()[machine1][i];
   solution.insertValue(machine2, job, j);
 }

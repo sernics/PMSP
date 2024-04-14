@@ -1,14 +1,14 @@
-#ifndef __INTER_EXCHANGE_HPP__
-#define __INTER_EXCHANGE_HPP__
+#ifndef __OUTER_EXCHANGE_HPP__
+#define __OUTER_EXCHANGE_HPP__
 
 #include "EnvironmentStructures.hpp"
 
-class InterExchange : public EnvironmentStructures {
+class OuterExchange : public EnvironmentStructures {
   public:
-    InterExchange() = default;
-    ~InterExchange() = default;
+    OuterExchange() = default;
+    ~OuterExchange() = default;
     PmspSolution getBestNeighbour(const PmspSolution& solution) override;
     void exchange(PmspSolution& solution, int i, int j, int machine1, int machine2);
 };
 
-#endif // __INNER_EXCHANGE_HPP__
+#endif // __OUTER_EXCHANGE_HPP__

@@ -4,8 +4,6 @@
 
 #include <iostream>
 
-void printPercentajeImprovement(PmspSolution& solution, PmspSolution& newSolution);
-
 ExecuteGrasp::ExecuteGrasp(PmspProblem problem) : pmspProblem_(problem) {}
 
 PmspSolution ExecuteGrasp::execute() {

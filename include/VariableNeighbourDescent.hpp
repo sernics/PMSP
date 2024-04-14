@@ -3,9 +3,9 @@
 
 #include "EnvironmentStructures.hpp"
 #include "InnerExchange.hpp"
-#include "InterExchange.hpp"
+#include "OuterExchange.hpp"
 #include "InnerReinsertion.hpp"
-#include "InterReinsertion.hpp"
+#include "OuterReinsertion.hpp"
 
 class VariableNeighbourDescent {
   public:

@@ -61,19 +61,19 @@ void PmspSolution::insertValue(int machine, int value, int position = -1) {
   if (position == -1) { 
     position = this->sizeOfMachineTasks_[machine];
   }
-  if (this->sizeOfMachineTasks_[machine] > 0) {
-    int* newMachine = new int[this->sizeOfMachineTasks_[machine] + 1];
-    for (int i = 0; i < position; i++) {
-      newMachine[i] = this->machines_[machine][i];
-    }
-    newMachine[position] = value;
-    for (int i = position + 1; i < this->sizeOfMachineTasks_[machine] + 1; i++) {
-      newMachine[i] = this->machines_[machine][i - 1];
-    }
-    this->machines_[machine] = newMachine;
-    this->sizeOfMachineTasks_[machine]++;
-    this->tct_values_[machine] = this->tct(machine);
+  // AQUI QUITE EL IF !!!!!!!!!!!!!!!!!!!!
+  int* newMachine = new int[this->sizeOfMachineTasks_[machine] + 1];
+  for (int i = 0; i < position; i++) {
+    newMachine[i] = this->machines_[machine][i];
   }
+  newMachine[position] = value;
+  for (int i = position + 1; i < this->sizeOfMachineTasks_[machine] + 1; i++) {
+    newMachine[i] = this->machines_[machine][i - 1];
+  }
+  this->machines_[machine] = newMachine;
+  this->sizeOfMachineTasks_[machine]++;
+  this->tct_values_[machine] = this->tct(machine);
+
 }
 
 void PmspSolution::deleteValue(int machine, int position) {

@@ -13,13 +13,13 @@ PmspSolution VariableNeighbourDescent::execute(PmspSolution& initialSolution) {
     std::cout << "Case: " << n << "\n";
     switch(n) {
       case 0:
-        environment = new InnerExchange();
+        environment = new OuterExchange();
         break;
       case 1:
-        environment = new InnerExchange();
+        environment = new OuterExchange();
         break;
       case 2: 
-        environment = new InnerExchange();
+        environment = new OuterExchange();
         break;
       case 3:
         environment = new InnerExchange();
