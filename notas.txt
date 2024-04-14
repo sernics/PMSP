@@ -24,3 +24,5 @@ VND {
 
 
 RECUERDA QUE EN ALGUN SITO DEL INNER O OUTER EXCHANGE TIENES UN BUG. REVISAR
+
+Cuando todo funcione cargate el execute GRASP

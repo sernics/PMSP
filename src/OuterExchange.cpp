@@ -4,15 +4,16 @@
 
 PmspSolution OuterExchange::getBestNeighbour(const PmspSolution& solution) {
   PmspSolution bestNeighbour = solution.getCopy();
-  for (int i = 0; i < solution.getMachineSize(); i++) {
-    for (int j = 0; j < solution.getMachineSize(); j++) {
-      if (i == j) {
+
+  for (int machineI = 0; machineI < solution.getMachineSize(); machineI++) {
+    for (int machineJ = machineI + 1; machineJ < solution.getMachineSize(); machineJ++) {
+      if (machineI == machineJ) {
         continue;
       }
-      for (int k = 0; k < solution.getSizeOfMachine(i); k++) {
-        for (int l = 0; l < solution.getSizeOfMachine(j); l++) {
+      for (int i = 0; i < solution.getSizeOfMachine(machineI); i++) {
+        for (int j = 0; j < solution.getSizeOfMachine(machineJ); j++) {
           PmspSolution neighbour = solution.getCopy();
-          exchange(neighbour, i, k, j, l);
+          exchange(neighbour, i, j, machineI, machineJ);
           if (neighbour.calculateTct() < bestNeighbour.calculateTct()) {
             bestNeighbour = neighbour;
           }
@@ -20,9 +21,10 @@ PmspSolution OuterExchange::getBestNeighbour(const PmspSolution& solution) {
       }
     }
   }
+
   return bestNeighbour;
 }
 
 void OuterExchange::exchange(PmspSolution &solution, int i, int j, int machine1, int machine2) {
-  solution.exchange(i, j, machine1, machine2);
+  solution = solution.exchange(i, j, machine1, machine2);
 }

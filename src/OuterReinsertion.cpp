@@ -5,18 +5,17 @@
 PmspSolution OuterReinsertion::getBestNeighbour(const PmspSolution& solution) {
   PmspSolution bestNeighbour = solution.getCopy();
 
-  // Reinsertion for each job in each machine in each position of the machine. Unless if are the same machine.
-  for (int i = 0; i < solution.getMachineSize(); i++) {
-    for (int j = 0; j < solution.getMachineSize(); j++) {
-      for (int k = 0; k < solution.getMachineSize(); k++) {
-        for (int l = 0; l < solution.getMachineSize(); l++) {
-          if (i != k) {
-            PmspSolution neighbour = solution.getCopy();
-            reinsert(neighbour, i, j, k, l);
-            if (neighbour.calculateTct() < bestNeighbour.calculateTct()) {
-              bestNeighbour = neighbour;
-              return bestNeighbour;
-            }
+  for (int machineI = 0; machineI < solution.getMachineSize(); machineI++) {
+    for (int machineJ = machineI + 1; machineJ < solution.getMachineSize(); machineJ++) {
+      if (machineI == machineJ) {
+        continue;
+      }
+      for (int i = 0; i < solution.getSizeOfMachine(machineI); i++) {
+        for (int j = 0; j < solution.getSizeOfMachine(machineJ); j++) {
+          PmspSolution neighbour = solution.getCopy();
+          reinsert(neighbour, i, j, machineI, machineJ);
+          if (neighbour.calculateTct() < bestNeighbour.calculateTct()) {
+            bestNeighbour = neighbour;
           }
         }
       }

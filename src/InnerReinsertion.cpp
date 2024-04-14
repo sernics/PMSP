@@ -4,15 +4,16 @@
 
 PmspSolution InnerReinsertion::getBestNeighbour(const PmspSolution& solution) {
   PmspSolution bestNeighbour = solution.getCopy();
-  for (int i = 0; i < bestNeighbour.getMachineSize(); i++) {
-    for (int j = 0; j < bestNeighbour.getSizeOfMachine(i); j++) {
-      for (int k = 0; k < bestNeighbour.getSizeOfMachine(i); k++) {
-        if (j != k) {
-          PmspSolution neighbour = bestNeighbour.getCopy();
-          reinsert(neighbour, i, j, k);
-          if (neighbour.calculateTct() < bestNeighbour.calculateTct()) {
-            bestNeighbour = neighbour;
-          }
+  for (int machineI = 0; machineI < solution.getMachineSize(); machineI++) {
+    for (int i = 0; i < solution.getSizeOfMachine(machineI); i++) {
+      for (int j = 0; j < solution.getSizeOfMachine(machineI); j++) {
+        if (i == j) {
+          continue;
+        }
+        PmspSolution neighbour = solution.getCopy();
+        reinsert(neighbour, i, j, machineI);
+        if (neighbour.calculateTct() < bestNeighbour.calculateTct()) {
+          bestNeighbour = neighbour;
         }
       }
     }
@@ -21,7 +22,6 @@ PmspSolution InnerReinsertion::getBestNeighbour(const PmspSolution& solution) {
 }
 
 void InnerReinsertion::reinsert(PmspSolution& solution, int i, int j, int machine) {
-  // Reinsertar la tarea i en la posición j de la máquina machine
-  int task = solution.getTasks()[machine][i];
-  solution.insertValue(machine, j, task);
+  int job = solution.getMachines()[machine][i];
+  solution.insertValue(machine, job, j);
 }

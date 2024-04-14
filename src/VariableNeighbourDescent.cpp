@@ -10,7 +10,7 @@ PmspSolution VariableNeighbourDescent::execute(PmspSolution& initialSolution) {
   EnvironmentStructures* environment;
   while (n <= 3) {
     PmspSolution newSolution = bestSolution.getCopy();
-    std::cout << "Case " <<  n << std::endl;
+    std::cout << n << std::endl;
     switch(n) {
       case 0:
         environment = new OuterReinsertion();
