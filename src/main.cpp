@@ -3,7 +3,6 @@
 #include "../include/PmspSolution.hpp"
 #include "../include/Pmsp.hpp"
 #include "../include/GreedyPmsp.hpp"
-// #include "../include/ExecuteGrasp.hpp"
 #include "../include/GeneralVariableNeighborhoodSearch.hpp"
 
 #include <iostream>
@@ -22,7 +21,7 @@ int main(int argc, char** argv) {
   std::cout << "tct: " << solution.calculateTct() << std::endl << std::endl;
 
   GeneralVariableNeighbourhoodSearch gvns;
-  PmspSolution gvnsSolution = gvns.execute(pmspProblem);
+  PmspSolution gvnsSolution = gvns.execute(pmspProblem, 100);
   std::cout << "GVNS solution" << std::endl;
   gvnsSolution.printSolution();
   std::cout << "tct: " << gvnsSolution.calculateTct() << std::endl << std::endl;

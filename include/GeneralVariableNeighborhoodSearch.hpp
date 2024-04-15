@@ -6,7 +6,7 @@
 class GeneralVariableNeighbourhoodSearch : public VariableNeighbourDescent {
   public:
     GeneralVariableNeighbourhoodSearch() = default;
-    PmspSolution execute(PmspProblem& pmspProblem);
+    PmspSolution execute(PmspProblem& pmspProblem, const int maxIterations = 500);
   private:  
     PmspSolution executeGVNS(PmspProblem& PmspProblem);
 };

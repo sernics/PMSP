@@ -3,9 +3,8 @@
 
 #include <iostream>
 
-PmspSolution GeneralVariableNeighbourhoodSearch::execute(PmspProblem& pmspProblem) {
+PmspSolution GeneralVariableNeighbourhoodSearch::execute(PmspProblem& pmspProblem, const int maxIterations) {
   int iterations = 0;
-  const int maxIterations = 500;
   int noImprovement = 0;
   PmspSolution bestSolution = GraspPmsp(pmspProblem).solve();
   do {
@@ -24,7 +23,6 @@ PmspSolution GeneralVariableNeighbourhoodSearch::executeGVNS(PmspProblem& pmspPr
   int k = 1;
   const int kMax = 6;
   PmspSolution bestSolution = GraspPmsp(pmspProblem).solve();
-  std::cout << "tct best solution: " << bestSolution.calculateTct() << std::endl;
   PmspSolution grasp = bestSolution.getCopy();
   VariableNeighbourDescent vnd;
   do {
