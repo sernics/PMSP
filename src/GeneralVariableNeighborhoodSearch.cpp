@@ -8,16 +8,15 @@ PmspSolution GeneralVariableNeighbourhoodSearch::execute(PmspProblem& pmspProble
   int noImprovement = 0;
   PmspSolution bestSolution = GraspPmsp(pmspProblem).solve();
   do {
-    std::cout << "Iterations " << iterations << std::endl;
     PmspSolution grasp = this->executeGVNS(pmspProblem);
     iterations++;
     if (grasp.calculateTct() < bestSolution.calculateTct()) {
       bestSolution = grasp;
       noImprovement = 0;
-    } else if (bestSolution.calculateTct() == grasp.calculateTct()) {
+    } else {
       noImprovement++;
     }
-    if (noImprovement == 50) break;
+    if (noImprovement == 100) break;
   } while (iterations < maxIterations);
 
   return bestSolution;
@@ -25,6 +24,20 @@ PmspSolution GeneralVariableNeighbourhoodSearch::execute(PmspProblem& pmspProble
 
 PmspSolution GeneralVariableNeighbourhoodSearch::executeGVNS(PmspProblem& pmspProblem) {
   VariableNeighbourDescent vnd;
-  PmspSolution solution =  GraspPmsp(pmspProblem).solve();
-  return vnd.execute(solution);
+  PmspSolution bestSolution =  GraspPmsp(pmspProblem).solve();
+  int k = 1;
+  const int kMax = 6;
+  do {
+    PmspSolution newSolution = bestSolution.shaking(k);
+
+    PmspSolution vndSolution = vnd.execute(newSolution);
+
+    if (vndSolution.calculateTct() < bestSolution.calculateTct()) {
+      bestSolution = vndSolution;
+      k = 1;
+    } else {
+      k++;
+    }
+  } while (k < kMax);
+  return bestSolution;
 }
