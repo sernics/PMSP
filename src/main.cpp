@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
   std::cout << "tct: " << solution.calculateTct() << std::endl << std::endl;
 
   GeneralVariableNeighbourhoodSearch gvns;
-  PmspSolution gvnsSolution = gvns.execute(pmspProblem, 1000);
+  PmspSolution gvnsSolution = gvns.execute(pmspProblem, 300);
   std::cout << "GVNS solution" << std::endl;
   gvnsSolution.printSolution();
   std::cout << "tct: " << gvnsSolution.calculateTct() << std::endl << std::endl;

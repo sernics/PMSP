@@ -9,6 +9,7 @@ PmspSolution GeneralVariableNeighbourhoodSearch::execute(PmspProblem& pmspProble
   PmspSolution bestSolution = GraspPmsp(pmspProblem).solve();
   do {
     PmspSolution grasp = this->executeGVNS(pmspProblem);
+    std::cout << "Iteration: " << iterations << " TCT: " << bestSolution.calculateTct() << std::endl;
     iterations++;
     if (grasp.calculateTct() < bestSolution.calculateTct()) {
       bestSolution = grasp;
@@ -39,5 +40,5 @@ PmspSolution GeneralVariableNeighbourhoodSearch::executeGVNS(PmspProblem& pmspPr
       k++;
     }
   } while (k < kMax);
-  return bestSolution;
+  return vnd.execute(bestSolution);
 }
